@@ -2,5 +2,5 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.list_posts, name='feed'),
+    path('login/', views.login_view, name='login'),
 ]
