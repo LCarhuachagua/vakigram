@@ -12,6 +12,12 @@ from django.contrib.auth.models import User
 from users.models import Profile
 
 # Create your views here.
+
+def update_profile(request):
+    """update profile view."""
+    return render(request, 'users/update_profile.html')
+
+
 def login_view(request):
     """login view."""
     if request.method == 'POST':
