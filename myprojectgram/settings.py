@@ -46,13 +46,15 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.security.SecurityMiddleware', # Relacionado con la seguridad
+    'django.contrib.sessions.middleware.SessionMiddleware', # Relacionado con las sesiones
+    'django.middleware.common.CommonMiddleware', # Relacionado con el funcionamiento de Django: debug, etc
+    'django.middleware.csrf.CsrfViewMiddleware', # Relacionado con la validation de formularios
+    'django.contrib.auth.middleware.AuthenticationMiddleware', # Relacionado con la autenticación de usuarios (login) y permisos (grupos).
+    'django.contrib.messages.middleware.MessageMiddleware', # Relacionado con el sistema de mensajes de Django (flash messages)
+    'django.middleware.clickjacking.XFrameOptionsMiddleware', # Relacionado con el clickjacking (ataques a través de iframes)
+    
+    'myprojectgram.middleware.ProfileCompletionMiddleware', # Middleware de la app users
 ]
 
 ROOT_URLCONF = 'myprojectgram.urls'
@@ -60,7 +62,9 @@ ROOT_URLCONF = 'myprojectgram.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            BASE_DIR /'templates',
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -122,6 +126,16 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [ BASE_DIR / 'static' ]
+#STATICFILES_FINDERS = [
+ #   'django.contrib.staticfiles.finders.FileSystemFinder',
+ #  'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+#]
+
+MEDIA_ROOT = BASE_DIR /'media'
+MEDIA_URL = 'media/'
+
+LOGIN_URL = '/users/login/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
