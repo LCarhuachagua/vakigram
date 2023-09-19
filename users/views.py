@@ -25,7 +25,7 @@ def update_profile(request):
     """update profile view."""
     profile = request.user.profile
     if request.method == 'POST':
-        form = ProfileForm(request.POST)
+        form = ProfileForm(request.POST, request.FILES)
         if form.is_valid():
             
             data = form.cleaned_data
@@ -35,7 +35,7 @@ def update_profile(request):
             profile.picture = data['picture']
             profile.save()
 
-            return redirect('update_profile')
+            return redirect('update')
         
     else:
         form = ProfileForm()
