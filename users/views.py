@@ -5,7 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from django.views.generic import DetailView
+from django.urls import reverse_lazy
+from django.views.generic import DetailView, FormView
 
 # exceptions
 from django.db.utils import IntegrityError
@@ -90,23 +91,32 @@ class UserDetailView(LoginRequiredMixin, DetailView):
         context['posts'] = Post.objects.filter(user=user).order_by('-created')
         return context
 
+class SignupView(FormView):
+    """Users sign up view."""
+    template_name = 'users/signup.html'
+    form_class = SignupForm
+    success_url = reverse_lazy('login')
+    def form_valid(self, form):
+        """Save form data."""
+        form.save()
+        return super().form_valid(form)
 
-def signup(request):
-    """signup view."""
-    if request.method == 'POST':
-        form = SignupForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('login')
-    else:
-        form = SignupForm()
-    return render(
-        request = request,
-        template_name = 'users/signup.html',
-        context = {
-            'form': form
-        }
-    )
+#def signup(request):
+#    """signup view."""
+#    if request.method == 'POST':
+#        form = SignupForm(request.POST)
+#        if form.is_valid():
+#            form.save()
+#            return redirect('login')
+#    else:
+#        form = SignupForm()
+#    return render(
+#        request = request,
+#        template_name = 'users/signup.html',
+#        context = {
+#            'form': form
+#        }
+#    )
 
 
     #if request.method == 'POST':
