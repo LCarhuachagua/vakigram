@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 #from django.shortcuts import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 
 # Forms
 from posts.forms import PostForm
@@ -23,9 +23,15 @@ class PostsFeedView(LoginRequiredMixin, ListView):
    template_name = 'posts/feed.html'
    model = Post
    ordering = ('-created',)
-   paginate_by = 2
+   paginate_by = 30
    context_object_name = 'posts'
 
+class PostDetailView(LoginRequiredMixin, DetailView):
+   """Return post detail."""
+
+   template_name = 'posts/detail.html'
+   queryset = Post.objects.all()
+   context_object_name = 'post'
 
 #@login_required
 #def list_posts(request):
