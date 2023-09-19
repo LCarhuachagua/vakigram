@@ -60,7 +60,7 @@ class UpdateProfileView(LoginRequiredMixin, UpdateView):
     fields = ['website', 'biography', 'phone_number', 'picture']
 
     def get_object(self):
-        """Return user's profile."""
+        """Return user's profile."""    
         return self.request.user.profile
 
     def get_success_url(self):
